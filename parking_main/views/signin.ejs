@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signin</title>
+    <%- include("./partials/link") %>
+    <script src="/script/login.js"></script>
+    <!-- <link rel="stylesheet" href="css/core.css"> -->
+</head>
+<body>
+     
+ 
+<div class="main"> <%- include("./partials/error") %>
+    <div class="mainl">
+       
+        <div class="cen">
+           <center><h1>Signin</h1></center> 
+            <form  id="fm" method="post" action="/user/signin">
+                
+                <div id="message" ></div> 
+                <label for="email">Email</label>
+                <input type="text"name="email" id="txt-username" placeholder="Enter email" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" for="password" id="pwd" placeholder="Enter password" required>
+                <div class="action">
+                    <button class="save-btn"  id="save-btn" type="submit" onclick="submitForm( )" >Login</button>
+                </div>
+            </form> 
+            <a href="/user/verify">Forget password</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

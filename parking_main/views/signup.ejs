@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+    <%- include("./partials/link") %>
+</head>
+</head>
+<body>
+    
+    <div class="mainl">
+        <div class="cen">
+           <center><h1>Signup</h1></center> 
+            <form action="/user/signup" method="post">
+                <div id="message-form"></div>
+                <label for="fullName">Name</label>
+                <input type="text"name="fullName" id="txt-cat-name" placeholder="Enter Your Fullname">
+                <label for="car no">Car NO</label>
+                <input type="text"name="carno" id="txt-cat-name" placeholder="carno">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="txt-cat-name" placeholder="Enter email">
+                <label for="password">Password</label>
+                <input type="password" name="password" for="password" id="txt-cat-name" placeholder="Enter password">
+                <div class="action">
+                    <button class="save-btn" type="submit">Create Account</button>
+                </div>
+            </form> 
+
+        </div>
+    </div>
+</body>
+</html>

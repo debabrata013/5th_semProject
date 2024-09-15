@@ -1,0 +1,188 @@
+*{
+    box-sizing: border-box;
+    padding: 0;margin: 0;
+    
+
+}
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+:root {
+    --gray-color: #EEEEEE;
+    --blue-color: #024080;
+--white-color: #FFFFFF;--placeholder-font-color: #7A7A7A;
+--orange-color: #F39405;--black-color: #000000;
+--red-color: #FF0000;--green-color: #1A5F0C;
+--table-row-odd-color: #EBF8FA;
+--sky:#26a9c1;
+--table-row-hover-color: #F8F8D5;--overlay-bg-color: rgba(17, 9, 9, 0.7);
+
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 16px auto;
+    padding: 20px;
+}
+form label{
+    color: #fff;
+    margin: 10px 0 0 0;
+   
+}form input {
+    color: var(--black-color);
+    border: 1px solid var(--blue-color);
+    border-radius: 10px; 
+    padding: 15px;
+    font-size: 16px;
+}
+form .action{
+    margin-top: 30px;
+    text-align: center;    
+}.save-btn {
+    padding: 10px;
+    width: 120px;
+    background: var(--sky);
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    color: var(--white-color);
+    border: 0;   border-radius: 20px; 
+    font-size: 16px;  
+    &:hover{
+        background: var(--blue-color);
+       color: var(--white-color);
+    }  
+}
+.nav h1{
+    color: rgb(61, 190, 127);font-weight: 800;
+    font-family:'Times New Roman', 'Times, serif';
+    
+}
+.nav{
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    background: #bdb8b8;
+    justify-content: space-between;
+
+}.nav ul{
+    display: flex;
+    list-style: none;
+    padding: 10px 5px;
+}
+.nav ul li{
+    padding: 5px 20px;
+    &:hover{
+        color: aqua;
+        border-bottom: 1px solid aqua;
+        
+        
+    }
+   
+}
+
+.nav a{
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 3px;
+    &:hover{
+        color: aqua;
+        border: 0 0 1px 0 solid aqua;
+        bottom: 1px;
+        
+    }
+}
+.mainl h1{
+    color: #fff;
+}
+.mainl{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background: #000;
+    background: url("/images/loginbg.jpeg") ;
+    background-position-x: center;
+    background-position-y: center;
+   
+}
+
+.mainl .cen{
+    height: 350px;
+    width: 400px;
+    background: rgba(red, green, blue, 0.7);
+    border-radius: 10px;
+    
+    
+}
+.mainl .cen a{
+    color: #fff;text-decoration: none;
+    text-align: center;
+
+}
+#message{
+    color: #fff;
+    font-size: larger;
+}
+
+/* Base alert styles */
+.alert {
+    z-index: 2;
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+  
+    border-radius: 5px;
+  }
+  
+  /* Close button */
+  .closebtn {
+    z-index: 2;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* Close button on hover */
+  .closebtn:hover {
+    z-index: 2;
+    color: black;
+  }
+  
+  .circular--portrait { position: relative; width: 200px; height: 20px; overflow: hidden; border-radius: 50%; } 
+  .circular--portrait  img{
+    height: 20px;
+   }
+   label{
+    color: #403e3edf;
+   }
+   .butto {
+    background: linear-gradient(237deg, #50ee55, #4be6df);
+    background-size: 400% 400%;
+    height: 30px;
+    margin-left: 20px;
+    -webkit-animation: button 8s ease infinite;
+    animation: button 8s ease infinite;
+}
+
+@-webkit-keyframes button {
+    0%{background-position:39% 0%}
+    50%{background-position:62% 100%}
+    100%{background-position:39% 0%}
+}
+@keyframes button {
+    0%{background-position:39% 0%}
+    50%{background-position:62% 100%}
+    100%{background-position:39% 0%}
+}
+  
+.circular--portrait { position: relative; background: #fff;
+    width: 50px; height: 50px; overflow: hidden; border-radius: 55%;
+   display: inline-block; } 
+ .circular--portrait  img{
+   height: 50px;
+  }

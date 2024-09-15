@@ -1,0 +1,104 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+    background: url('/images/landing.jpeg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color: #ffffff75; /* White text color for better readability */
+    padding: 0 20px; /* Padding to avoid text touching the edges */
+}
+.hero-section .container{
+    background: #00000000;
+}
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+.hero-section .btn {
+    padding: 10px 20px;
+    font-size: 1.25rem;
+    background-color: #007bff; /* Primary blue background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hero-section .btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Features Section */
+#features i {
+    color: #007bff;
+    margin-bottom: 15px;
+    font-size: 2rem; /* Larger icon size */
+}
+
+#features h3 {
+    font-size: 1.75rem;
+    margin-top: 15px;
+    margin-bottom: 10px; /* Consistent spacing */
+}
+
+#features p {
+    font-size: 1rem;
+    color: #6c757d; /* Subtle text color */
+}
+
+/* About Section */
+#about p {
+    font-size: 1.25rem;
+    line-height: 1.6; /* Improved readability */
+    color: #333; /* Darker text color */
+}
+
+/* Contact Section */
+#contact form {
+    background: #f8f9fa;
+    padding: 20px;
+    
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto; /* Center form on page */
+}
+
+#contact input, #contact textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+/* Footer */
+footer {
+    background: #f8f9fa;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.875rem;
+    color: #6c757d; /* Subtle text color */
+}
+form label{
+    color: #000;
+}

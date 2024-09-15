@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="/css/styles.css"> 
+    <%- include("./partials/link") %>
+</head>
+<body>
+    <%- include("./partials/admin_nav") %>
+    <div class="container">
+        <header>
+            <h1>User List</h1>
+        </header>
+        <main>
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User rows will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchUsers();
+        });
+
+        async function fetchUsers() {
+            try {
+                const response = await fetch('/api/users'); // Adjust the endpoint as needed
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const users = await response.json();
+                populateTable(users);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+
+        function populateTable(users) {
+            const tableBody = document.querySelector('#userTable tbody');
+            tableBody.innerHTML = ''; // Clear existing content
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+
+                // Apply golden background if user is VIP
+                const rowClass = user.isVIP ? 'vip' : '';
+
+                row.innerHTML = `
+                    <td>${user.userId}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.status}</td>
+                `;
+
+                row.className = rowClass;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Booking Requests</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include("./partials/admin_nav") %>
+    <%- include("./partials/link") %>
+    <div class="container">
+        <header>
+            <h1>Booking Requests</h1>
+        </header>
+        <main>
+            <table id="bookingTable">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User Name</th>
+                        <th>Parking Spot</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Booking rows will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchBookings();
+        });
+
+        async function fetchBookings() {
+            try {
+                const response = await fetch('/api/bookings');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const bookings = await response.json();
+                populateTable(bookings);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+
+        function populateTable(bookings) {
+            const tableBody = document.querySelector('#bookingTable tbody');
+            tableBody.innerHTML = ''; // Clear existing content
+
+            bookings.forEach(booking => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${booking.bookingId}</td>
+                    <td>${booking.userName}</td>
+                    <td>${booking.parkingSpot}</td>
+                    <td>${booking.startTime}</td>
+                    <td>${booking.endTime}</td>
+                    <td>${booking.status}</td>
+                    <td>
+                        <button class="confirm-btn" onclick="confirmBooking('${booking.bookingId}')">Confirm</button>
+                        <button class="cancel-btn" onclick="cancelBooking('${booking.bookingId}')">Cancel</button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function confirmBooking(bookingId) {
+            try {
+                const response = await fetch(`/api/bookings/${bookingId}/confirm`, {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                alert('Booking confirmed');
+                fetchBookings(); // Refresh the list
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+
+        async function cancelBooking(bookingId) {
+            try {
+                const response = await fetch(`/api/bookings/${bookingId}/cancel`, {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                alert('Booking canceled');
+                fetchBookings(); // Refresh the list
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forget-Password</title>
+    <%- include("./partials/link") %>
+</head>
+<body>
+    <div class="mainl">
+        <div class="cen">
+           <center><h1>Forget Password</h1></center> 
+            <form method="post" action="/user/forgetpass">
+                <div id="message-form"></div>
+                <label for="email">Email</label>
+                <input type="text"name="email" id="txt-cat-name" placeholder="Enter email">
+                <label for="password">New - Password</label>
+                <input type="password" name="password" for="password" id="txt-cat-name" placeholder="Enter password">
+                <label for="otp">OTP</label>
+                <input type="text"name="otp" id="txt-cat-name" placeholder="Enter verification otp">
+                <div class="action">
+                    <button class="save-btn" type="submit">Change Password</button>
+                </div>
+            </form> 
+            
+        </div>
+    </div>
+</body>
+</html>
