@@ -3,107 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Booking Requests</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Admin - Booking Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <%- include("./partials/admin_nav") %>
+  
     <%- include("./partials/link") %>
-    <div class="container">
-        <header>
-            <h1>Booking Requests</h1>
-        </header>
-        <main>
-            <table id="bookingTable">
-                <thead>
-                    <tr>
-                        <th>Booking ID</th>
-                        <th>User Name</th>
-                        <th>Parking Spot</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Booking rows will be inserted here dynamically -->
-                </tbody>
-            </table>
-        </main>
-    </div>
-
+    <%- include("./partials/admin_nav") %>
+    <h1 class="dark-mode">Admin - Manage Bookings</h1>
+<table id="bookings-table" class="dark-mode">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Location</th>
+            <th>Duration</th>
+            <th>Total Cost</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Booking rows will be injected here -->
+    </tbody>
+</table>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchBookings();
-        });
+       async function fetchBookings() {
+    const response = await fetch('/api/bookings'); // Fetch only pending bookings
+    const bookings = await response.json();
+    const tableBody = document.getElementById('bookings-table').getElementsByTagName('tbody')[0];
+    
+    // Clear the table before rendering
+    tableBody.innerHTML = '';
+    
+    bookings.forEach(booking => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+            <td>${booking._id}</td>
+            <td>${booking.name}</td>
+            <td>${booking.email}</td>
+            <td>${booking.location}</td>
+            <td>${booking.duration} hours</td> <!-- Assuming duration is in days -->
+            <td>₹${booking.totalCost}</td> <!-- Assuming totalCost is in USD -->
+            <td>${booking.status}</td>
+            <td>
+                <button onclick="updateStatus('${booking._id}', 'Confirmed')">Confirm</button>
+                <button onclick="updateStatus('${booking._id}', 'Canceled')">Cancel</button>
+            </td>
+        `;
+    });
+}
 
-        async function fetchBookings() {
-            try {
-                const response = await fetch('/api/bookings');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const bookings = await response.json();
-                populateTable(bookings);
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-            }
-        }
+async function updateStatus(id, newStatus) {
+    const response = await fetch(`/book/${id}/status`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+    });
 
-        function populateTable(bookings) {
-            const tableBody = document.querySelector('#bookingTable tbody');
-            tableBody.innerHTML = ''; // Clear existing content
+    const result = await response.json();
+    alert(result.message);
+    fetchBookings(); // Refresh the bookings after status update
+}
 
-            bookings.forEach(booking => {
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                    <td>${booking.bookingId}</td>
-                    <td>${booking.userName}</td>
-                    <td>${booking.parkingSpot}</td>
-                    <td>${booking.startTime}</td>
-                    <td>${booking.endTime}</td>
-                    <td>${booking.status}</td>
-                    <td>
-                        <button class="confirm-btn" onclick="confirmBooking('${booking.bookingId}')">Confirm</button>
-                        <button class="cancel-btn" onclick="cancelBooking('${booking.bookingId}')">Cancel</button>
-                    </td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        }
-
-        async function confirmBooking(bookingId) {
-            try {
-                const response = await fetch(`/api/bookings/${bookingId}/confirm`, {
-                    method: 'POST'
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                alert('Booking confirmed');
-                fetchBookings(); // Refresh the list
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-            }
-        }
-
-        async function cancelBooking(bookingId) {
-            try {
-                const response = await fetch(`/api/bookings/${bookingId}/cancel`, {
-                    method: 'POST'
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                alert('Booking canceled');
-                fetchBookings(); // Refresh the list
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-            }
-        }
+// Fetch bookings on page load
+window.onload = fetchBookings;
     </script>
 </body>
 </html>

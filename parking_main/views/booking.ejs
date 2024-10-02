@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Slot Booking</title>
+    
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border 0.3s;
+}
+
+input:focus, select:focus {
+    border: 1px solid #4CAF50;
+    outline: none;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.total-cost {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #4CAF50;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+    </style>
+    
+</head>
+<body>
+    
+
+    <main>
+        <h1>Book Your Parking Slot</h1>
+        <form action="/book" method="POST">
+            <label for="start-date">Select Start Date:</label>
+            <input type="date" id="start-date" name="startDate" required>
+        
+            <label for="duration">Duration (in hours):</label>
+            <input type="number" id="duration" name="duration" min="1" value="1" required>
+        
+            <label for="location">Select Location:</label>
+            <select id="location" name="location" required>
+                <option value="" disabled selected>Select Location</option>
+                <option value="location1">Location 1</option>
+                <option value="location2">Location 2</option>
+                <option value="location3">Location 3</option>
+                <option value="location4">Location 4</option>
+            </select>
+        
+            <h2>Your Details</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required>
+        
+            <button type="submit">Book Now</button>
+        </form>
+        <div class="total-cost">Total Cost: <span id="cost">50.00</span></div>
+    </main>
+
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const durationInput = document.getElementById('duration');
+            const costDisplay = document.getElementById('cost');
+            const startDateInput = document.getElementById('start-date');
+            const form = document.querySelector('form');
+        
+            // Set today's date as minimum for start date
+            const today = new Date().toISOString().split('T')[0];
+            startDateInput.setAttribute('min', today);
+        
+            function calculatePrice() {
+                const duration = parseInt(durationInput.value, 10);
+                const costPerHour = 50; // Cost per hour
+                const totalCost = duration * costPerHour; // Calculate total cost
+                costDisplay.textContent = totalCost.toFixed(2); // Display two decimal points
+            }
+        
+            durationInput.addEventListener('input', calculatePrice);
+        
+            // Handle form submission
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent the default form submission
+                
+                // Gather form data
+                const formData = {
+                    startDate: document.getElementById('start-date').value,
+                    duration: document.getElementById('duration').value,
+                    location: document.getElementById('location').value,
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                };
+        
+                try {
+                    // Send POST request to backend
+                    const response = await fetch('/book', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+        
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert('Booking Confirmed!');
+                        form.reset(); // Reset the form after successful submission
+                        costDisplay.textContent = "50.00"; // Reset cost display
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    console.error('Error booking slot:', error);
+                    alert('Failed to book slot. Please try again.');
+                }
+            });
+        });
+        </script>
+</body>
+</html>

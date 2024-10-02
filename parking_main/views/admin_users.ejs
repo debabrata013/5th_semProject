@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,26 +12,26 @@
     <%- include("./partials/admin_nav") %>
     <div class="container">
         <header>
-            <h1>User List</h1>
+            <h1 class="dark-mode"> User List</h1>
         </header>
         <main>
-            <table id="userTable">
+            <table class="dark-mode" id="userTable">
                 <thead>
                     <tr>
                         <th>User ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Status</th>
+                       
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="dark-mode">
                     <!-- User rows will be inserted here dynamically -->
                 </tbody>
             </table>
         </main>
     </div>
 
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetchUsers();
         });
@@ -69,6 +70,48 @@
                 tableBody.appendChild(row);
             });
         }
+    </script> -->
+    <script>
+         document.addEventListener('DOMContentLoaded', () => {
+            fetchUsers();
+        });
+        async function fetchUsers() {
+    try {
+
+        const response = await fetch('/api/users'); // Ensure this matches your API endpoint
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const users = await response.json();
+        populateTable(users);
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
+
+function populateTable(users) {
+    
+    const tableBody = document.querySelector('#userTable tbody');
+    tableBody.innerHTML = ''; // Clear existing content
+
+    users.forEach(user => {
+        const row = document.createElement('tr');
+
+        // Apply golden background if user is VIP
+        const rowClass = user.role === 'VIP' ? 'vip' : ''; // Assuming VIP is determined by role
+
+        row.innerHTML = `
+            <td>${user._id}</td> <!-- Use _id for User ID -->
+            <td>${user.fullName}</td> <!-- Adjust as per your user model -->
+            <td>${user.email}</td>
+            
+        `;
+// 
+        row.className = rowClass;
+        tableBody.appendChild(row);
+    });
+} 
+
     </script>
 </body>
 </html>
